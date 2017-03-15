@@ -1,0 +1,29 @@
+{
+  "name": "creative4",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.16.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "express": "~4.14.1",
+    "jade": "~1.11.0",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.2"
+  },
+  "description": "Creative Activity 4 for CS201R at BYU",
+  "main": "bin/www",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GaryGSC/creative4.git"
+  },
+  "author": "Carter Sloan and Gary Crye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GaryGSC/creative4/issues"
+  },
+  "homepage": "https://github.com/GaryGSC/creative4#readme"
+}
