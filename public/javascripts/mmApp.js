@@ -60,14 +60,8 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 	$scope.submitGuess = function(){
 	    socket.emit('make_guess', $scope.guess.guess);
 		console.log("Guess: " + $scope.guess.guess);
-        //Need to submit scope.guess to Server
-        //And handle response
-        //response data will replace scope.sampleresponse
-
-        // Handle winning response......
+        //Response will be handled down below on "board_updated"
 	};
-
-
 
     $scope.createGame = function() {
         socket.emit('create_game', $scope.userName);
@@ -137,12 +131,21 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
     socket.on("code_was_guessed", function(){
         console.log("The code was guessed!");
         $scope.message="The code was guessed!";
-        //GAME OVER? ENABLE/DISABLE STUFF?
+
+        //GAME OVER. ENABLE/DISABLE STUFF?
     });
+
+	socket.on("code_was_guessed", function(){
+		console.log("The code was not guessed!");
+		$scope.message="The code was not guessed!";
+
+		//GAME OVER!
+	});
 
     socket.on("a_player_left", function(){
         console.log("The other player left.");
         $scope.message="The other player left!";
+
         //GAME OVER
     })
 });

@@ -113,6 +113,9 @@ module.exports = function(client){
 		if (response == "SSSS"){
 			rooms[in_game].host.emit("code_was_guessed");
 			rooms[in_game].player.emit("code_was_guessed");
+		} else if (board_state.guesses.length == 10){
+			rooms[in_game].host.emit("code_not_guessed");
+			rooms[in_game].player.emit("code_not_guessed");
 		}
 	});
 
