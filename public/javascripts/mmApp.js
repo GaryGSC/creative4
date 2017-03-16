@@ -136,13 +136,13 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 
     socket.on("code_was_guessed", function(){
         console.log("The code was guessed!");
-
+        $scope.message="The code was guessed!";
         //GAME OVER? ENABLE/DISABLE STUFF?
     });
 
     socket.on("a_player_left", function(){
         console.log("The other player left.");
-
+        $scope.message="The other player left!";
         //GAME OVER
     })
 });
