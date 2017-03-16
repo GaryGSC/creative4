@@ -64,6 +64,16 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
         console.log("Set code to: " + $scope.colorCode.code);
     };
 
+	$scope.submitGuess = function(){
+	    socket.emit('make_guess', $scope.guess.guess);
+		console.log("Guess: " + $scope.guess.guess);
+        //Response will be handled down below on "board_updated"
+	};
+
+    $scope.createGame = function() {
+        socket.emit('create_game', $scope.userName);
+    };
+
     $scope.joinGame = function() {
         var parameters = {
             room_id: $scope.roomId,
@@ -154,7 +164,18 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
           $scope.message="The code was guessed!";
           //GAME OVER? ENABLE/DISABLE STUFF?
         });
+        $scope.message="The code was guessed!";
+
+        //GAME OVER. ENABLE/DISABLE STUFF?
     });
+
+	socket.on("code_not_guessed", function(){
+		console.log("The code was not guessed!");
+    $scope.$apply(function() {
+      $scope.message="The code was not guessed!";
+  		//GAME OVER!
+    });
+	});
 
     socket.on("a_player_left", function(){
         console.log("The other player left.");
