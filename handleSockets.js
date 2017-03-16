@@ -66,12 +66,17 @@ module.exports = function(client){
 		console.log(name + " guessed " + JSON.stringify(guess));
 
 		var this_guess = {
-			guess: []
+			guess: [
+				{id: 1, value: ""},
+				{id: 2, value: ""},
+				{id: 3, value: ""},
+				{id: 4, value: ""}
+			]
 		};
-		this_guess.guess[0] = guess[0];
-		this_guess.guess[1] = guess[1];
-		this_guess.guess[2] = guess[2];
-		this_guess.guess[3] = guess[3];
+		this_guess.guess[0].value = guess[0];
+		this_guess.guess[1].value = guess[1];
+		this_guess.guess[2].value = guess[2];
+		this_guess.guess[3].value = guess[3];
 
 		var temp_code = [];
 		temp_code[0] = rooms[in_game].code[0];
@@ -106,7 +111,6 @@ module.exports = function(client){
 		var board_state = {
 			guesses: rooms[in_game].guesses
 		};
-		console.log("State of game:", board_state);
 		rooms[in_game].host.emit("board_updated", board_state);
 		rooms[in_game].player.emit("board_updated", board_state);
 

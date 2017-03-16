@@ -151,7 +151,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 
     socket.on("board_updated", function(board_state){
         console.log("Board now looks like this:", JSON.stringify(board_state));
-        $scope.$apply(function(board_state) {
+        $scope.$apply(function() {
             //UPDATE APPEARANCE OF BOARD BASED ON board_state
             $scope.sampleResponse = board_state;
         });
