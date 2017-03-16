@@ -1,60 +1,108 @@
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>MASTERMIND</title>
+
+        <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js" integrity="sha256-WKvqiY0jZHWQZIohYEmr9KUC5rEaYEOFTq+ByllJK8w=" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js?1"></script>
         <script src="javascripts/client_socket.js"></script>
-		<script src="javascripts/mmApp.js"></script>
-        <link rel="stylesheet" href="stylesheets/main.css">
-    </head>
-	<body ng-app="mmApp">
-        
-        <h1 id="title">Play Mastermind</h1>
-        
-		<div ng-controller="mmCtrl">
-            
-            <div id="marksboard">
-                <ul ng-repeat="response in responses">
-                    <li style="float: left">
-                        <div class="mark" style="color:black"></div>
-                    </li>
-                    <li>
-                        <div class="mark" style="color:black"></div>
-                    </li>
-                    <li>
-                        <div class="mark" style="color:black"></div>
-                    </li>
-                    <li>
-                        <div class="mark" style="color:black"></div>
-                    </li>
-                </ul>
-            </div>
-            
-			<div id="gameboard">
-				<ul ng-repeat="row in rows" style="list-style-type: none;">
-					<li style="float: left;">
-						<select ng-model="row.spot1" ng-options="color.id as color.value for color in colors"></select>
-					</li>
-					<li style="float: left;">
-						<select ng-model="row.spot2" ng-options="color.id as color.value for color in colors"></select>
-					</li>
-					<li style="float: left;">
-						<select ng-model="row.spot3" ng-options="color.id as color.value for color in colors"></select>
-					</li>
-					<li style="float: left;">
-						<select ng-model="row.spot4" ng-options="color.id as color.value for color in colors"></select>
-					</li>
-				</ul>
-			</div>
+        <script src="javascripts/mmApp.js?1"></script>
 
-			<div id="submitbutton">
-				<input type="submit" value="Submit Guess" ng-click="submitGuess()">
-			</div>
-        
-		</div>
-	</body>
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="stylesheets/main.css">
+
+    </head>
+    <body ng-app="mmApp">
+
+        <div ng-controller="mmCtrl">
+
+            <h1 id="title">Play Mastermind</h1>
+
+            <div id="gameandlogin">
+                <input type="text" ng-model="userName" placeholder="Enter username here...">
+                <br>
+                <input type="text" ng-model="roomId" placeholder="Enter join code here...">
+                <br>
+                <input type="submit" value="Create New Game" ng-click="createGame()">
+                <input type="submit" value="Join Existing Game" ng-click="joinGame()">
+            </div>
+
+            <div id="message-box" style="min-height:50px">
+                {{message}}
+            </div>
+
+            <div style="width: 100%; text-align: center;">
+                <div id="color-code-box" ng-show="showColorCodeBox">
+                    <div>
+                        <select ng-model="colorCode.code[0]" ng-options="color.id as color.value for color in colors"></select>
+                        <select ng-model="colorCode.code[1]" ng-options="color.id as color.value for color in colors"></select>
+                        <select ng-model="colorCode.code[2]" ng-options="color.id as color.value for color in colors"></select>
+                        <select ng-model="colorCode.code[3]" ng-options="color.id as color.value for color in colors"></select>
+                    </div>
+
+                    <div id="" style="margin-top: 20px">
+                        <input type="submit" value="Submit Color Code" ng-click="submitColorCode()">
+                    </div>
+                </div>
+
+                <div id="marksboard">
+                    <ul ng-repeat="row in sampleResponse.guesses" style="list-style-type: none">
+                        <li style="float: left;">
+                            <div class="response-peg" ng-class="{
+                                'response-red':row.response[0]=='S',
+                                'response-white':row.response[0]=='C'}">
+                            </div>
+                        </li>
+                        <li style="float: left;">
+                            <div class="response-peg" ng-class="{
+                                'response-red':row.response[1]=='S',
+                                'response-white':row.response[1]=='C'}">
+                            </div>
+                        </li>
+                        <li style="float: left;">
+                            <div class="response-peg" ng-class="{
+                                'response-red':row.response[2]=='S',
+                                'response-white':row.response[2]=='C'}">
+                            </div>
+                        </li>
+                        <li style="float: left;">
+                            <div class="response-peg" ng-class="{
+                                'response-red':row.response[3]=='S',
+                                'response-white':row.response[3]=='C'}">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="gameboard">
+                    <ul ng-repeat="row in sampleResponse.guesses" style="list-style-type: none">
+                        <li ng-repeat="color in row.guess track by $index" style="float: left;">
+                            <div class="color-peg" ng-class="{
+                                'peg-red':color.value=='RED',
+                                'peg-green':color.value=='GREEN',
+                                'peg-yellow':color.value=='YELLOW',
+                                'peg-purple':color.value=='PURPLE',}">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="answer-bar">
+                <select ng-model="guess.guess[0]" ng-options="color.id as color.value for color in colors"></select>
+                <select ng-model="guess.guess[1]" ng-options="color.id as color.value for color in colors"></select>
+                <select ng-model="guess.guess[2]" ng-options="color.id as color.value for color in colors"></select>
+                <select ng-model="guess.guess[3]" ng-options="color.id as color.value for color in colors"></select>
+            </div>
+
+            <div id="submit-button">
+                <input type="submit" value="Submit Guess" ng-click="submitGuess()">
+            </div>
+
+        </div>
+    </body>
 </html>

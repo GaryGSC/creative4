@@ -7,20 +7,61 @@ body {
     text-align: center;
 }
 
+
+/**/
+
+#message-box {
+  text-align: center;
+  padding-top: 15px;
+}
+
+/**/
+
+#color-code-box {
+    padding: 20px 50px;
+    margin-bottom: 30px;
+}
+
+
+/**/
+
+
 #marksboard {
     display: inline-block;
     background-color: lightgrey;
     width: 100px;
-    margin-left: 200px;
+    height: 500px;
     border-style: solid;
     border-width: 2px;
     border-color: darkgrey;
     border-radius: 10px;
-    
+    text-align: center;
+}
+
+#marksboard ul {
+    border: 1px solid black;
+    float: left;
+    padding-left: 20px;
+    margin: 6px;
 }
 
 #marksboard li {
+    padding: 4px;
+    width: 25%;
     float: left;
+}
+
+.response-peg {
+    border: 1px solid black;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.response-peg.response-red {
+    background-color: red;
+}
+.response-peg.response-white {
+    background-color: white;
 }
 
 .mark {
@@ -29,15 +70,20 @@ body {
     margin-bottom: 5px;
 }
 
+
+/**/
+
+
 #gameboard {
     display: inline-block;
     clear: both;
-    width: 350px; 
+    width: 270px;
     background-color: darkgray;
     border-style: solid;
     border-width: 2px;
     border-color: darkgrey;
     border-radius: 10px;
+    height: 500px;
 }
 
 #gameboard ul {
@@ -46,6 +92,41 @@ body {
     margin-bottom: 5px;
 }
 
-#submitbutton {
+#gameboard ul li {
+    margin-left: 10px;
+}
+
+.color-peg {
+    border: 2px solid black;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 50%;
+}
+.color-peg.peg-red {
+    background-color: red;
+}
+.color-peg.peg-yellow {
+    background-color: yellow;
+}
+.color-peg.peg-green {
+    background-color: green;
+}
+.color-peg.peg-purple {
+    background-color: purple;
+}
+
+/**/
+
+#answer-bar {
+  text-align: center;
+  margin-top:30px;
+}
+
+/**/
+
+#submit-button {
+    text-align:center;
+    margin-top:15px;
+    width:100%"
     display: inline-block;
 }
