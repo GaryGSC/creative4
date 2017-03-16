@@ -135,7 +135,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
         //GAME OVER. ENABLE/DISABLE STUFF?
     });
 
-	socket.on("code_was_guessed", function(){
+	socket.on("code_not_guessed", function(){
 		console.log("The code was not guessed!");
 		$scope.message="The code was not guessed!";
 
