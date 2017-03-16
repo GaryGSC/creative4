@@ -38,8 +38,8 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
                 guess: [
                     {id: 1, value: "RED"},
                     {id: 2, value: "YELLOW"},
-                    {id: 3, value: "RED"},
-                    {id: 4, value: "GREEN"}
+                    {id: 3, value: "GREEN"},
+                    {id: 4, value: "RED"}
                  ],
                 response: "SSS "
             },
@@ -47,10 +47,10 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
                 guess: [
                     {id: 1, value: "RED"},
                     {id: 2, value: "YELLOW"},
-                    {id: 3, value: "RED"},
+                    {id: 3, value: "GREEN"},
                     {id: 4, value: "PURPLE"}
                  ],
-                response: "SSS "
+                response: "SSSS"
             }
         ]
     };
@@ -120,8 +120,8 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 	    console.log("You're the mastermind!");
         $scope.$apply (function() {
             $scope.message="You've been selected as the mastermind! Please submit the color code!";
-            //ENABLE SUBMIT COLOR CODE BUTTON
             $scope.showColorCodeBox = true;
+            $scope.sampleResponse = { guesses: [] }
         });
 	});
 
@@ -129,6 +129,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
         console.log("The other player is the mastermind!");
         $scope.$apply (function() {
             $scope.message="The other player was selected as the mastermind! Please wait while they submit the color code!";
+			$scope.sampleResponse = { guesses: [] }
         });
 	});
 
