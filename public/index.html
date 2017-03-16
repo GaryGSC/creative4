@@ -26,8 +26,8 @@
                 <br>
                 <input type="text" ng-model="roomId" placeholder="Enter join code here...">
                 <br>
-                <input type="submit" value="Create New Game" ng-click="createGame()">
-                <input type="submit" value="Join Existing Game" ng-click="joinGame()">
+                <input type="submit" value="Create New Game" ng-disabled="disableNewGameBtn" ng-click="createGame()">
+                <input type="submit" value="Join Existing Game" ng-disabled="disableJoinGameBtn" ng-click="joinGame()">
             </div>
 
             <div id="message-box" style="min-height:50px">
@@ -99,7 +99,7 @@
             </div>
 
             <div id="submit-button">
-                <input type="submit" value="Submit Guess" ng-click="submitGuess()">
+                <input type="submit" value="Submit Guess" ng-disabled="disableGuessSubmitBtn" ng-click="submitGuess()">
             </div>
 
         </div>
