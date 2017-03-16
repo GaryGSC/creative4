@@ -56,7 +56,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 
     $scope.createGame = function() {
         socket.emit('create_game', $scope.userName);
-        $scope.message="Creating new game now...";
+        console.log("Creating new game now...");
     };
 
     $scope.submitColorCode = function() {
@@ -89,99 +89,91 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 
 	socket.on('game_created', function(room_id){
 	    console.log("Game successfully created. Your join code is: "+room_id);
-      $scope.$apply(function() {
-        $scope.roomId = room_id;
-        $scope.message="Game successfully created. Your join code is: " + room_id;
-        //DISABLE CREATE/JOIN GAME BUTTONS
-        $scope.disableNewGameBtn = true;
-        $scope.disableJoinGameBtn = true;
-      });
+        $scope.$apply(function() {
+            $scope.roomId = room_id;
+            $scope.message="Game successfully created. Your join code is: " + room_id;
+            $scope.disableNewGameBtn = true;
+            $scope.disableJoinGameBtn = true;
+        });
 	});
 
 	socket.on('successfully_joined', function(){
-	   console.log("Successfully joined game "+$scope.roomId);
-     $scope.$apply(function() {
-       $scope.message="Game successfully joined.";
-
-      //DISABLE CREATE/JOIN GAME BUTTONS
-       $scope.disableNewGameBtn = true;
-       $scope.disableJoinGameBtn = true;
-     });
+	    console.log("Successfully joined game "+$scope.roomId);
+        $scope.$apply(function() {
+            $scope.message="Game successfully joined.";
+            $scope.disableNewGameBtn = true;
+            $scope.disableJoinGameBtn = true;
+        });
 	});
 
 	socket.on("failed_to_join", function(){
 	    console.log("Failed to join game "+$scope.roomId);
-      $scope.$apply (function() {
-        $scope.message="Unable to join game.";
-      });
+        $scope.$apply (function() {
+            $scope.message="Unable to join game.";
+        });
 	});
 
 	socket.on("you_should_set_code", function(){
 	    console.log("You're the mastermind!");
-      $scope.$apply (function() {
-        $scope.message="You've been selected as the mastermind! Please submit the color code!";
-        //ENABLE SUBMIT COLOR CODE BUTTON
-        $scope.showColorCodeBox = true;
-      });
+        $scope.$apply (function() {
+            $scope.message="You've been selected as the mastermind! Please submit the color code!";
+            //ENABLE SUBMIT COLOR CODE BUTTON
+            $scope.showColorCodeBox = true;
+        });
 	});
 
 	socket.on("other_player_is_setting_code", function(){
-	    console.log("The other player is the mastermind!");
-      $scope.$apply (function() {
-        $scope.message="The other player was selected as the mastermind! Please wait while they submit the color code!";
-      });
+        console.log("The other player is the mastermind!");
+        $scope.$apply (function() {
+            $scope.message="The other player was selected as the mastermind! Please wait while they submit the color code!";
+        });
 	});
 
 	socket.on("code_set", function(){
-	    console.log("Successfully set the color code. Now it's time for the other player to guess it.");
-      $scope.$apply (function() {
-        $scope.message="Successfully set the color code. Now it's time for player 2 to guess it.";
-        //DISABLE SUBMIT COLOR CODE BUTTON
-        $scope.showColorCodeBox = false;
-      });
+        console.log("Successfully set the color code. Now it's time for the other player to guess it.");
+        $scope.$apply (function() {
+            $scope.message="Successfully set the color code. Now it's time for player 2 to guess it.";
+            $scope.showColorCodeBox = false;
+        });
     });
 
     socket.on("code_was_set", function(){
         console.log("The other player set the code. Now it's time for you to break it!");
         $scope.$apply(function() {
-          $scope.message="The other player set the code. Now it's time for you to break it!";
-          //ENABLE SUBMIT GUESS BUTTON
-          $scope.disableGuessSubmitBtn = false;
+            $scope.message="The other player set the code. Now it's time for you to break it!";
+            $scope.disableGuessSubmitBtn = false;
         });
     });
 
     socket.on("board_updated", function(board_state){
         console.log("Board now looks like this:", JSON.stringify(board_state));
         $scope.$apply(function(board_state) {
-          //UPDATE APPEARANCE OF BOARD BASED ON board_state
-          $scope.sampleResponse=JSON.stringify(board_state);
+            //UPDATE APPEARANCE OF BOARD BASED ON board_state
+            $scope.sampleResponse=JSON.stringify(board_state);
         });
     });
 
     socket.on("code_was_guessed", function(){
         console.log("The code was guessed!");
         $scope.$apply(function() {
-          $scope.message="The code was guessed!";
-          //GAME OVER? ENABLE/DISABLE STUFF?
+            $scope.message="The code was guessed!";
+            //GAME OVER? ENABLE/DISABLE STUFF?
         });
-        $scope.message="The code was guessed!";
-
-        //GAME OVER. ENABLE/DISABLE STUFF?
     });
 
 	socket.on("code_not_guessed", function(){
 		console.log("The code was not guessed!");
-    $scope.$apply(function() {
-      $scope.message="The code was not guessed!";
-  		//GAME OVER!
-    });
+        $scope.$apply(function() {
+            $scope.message="The code was not guessed!";
+  		    //GAME OVER!
+        });
 	});
 
     socket.on("a_player_left", function(){
         console.log("The other player left.");
         $scope.$apply(function() {
-          $scope.message="The other player left!";
-          //GAME OVER
+            $scope.message="The other player left!";
+            //GAME OVER
         });
     });
 });
