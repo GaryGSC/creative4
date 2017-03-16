@@ -17,7 +17,11 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
         {id: "RED", value: "red"},
         {id: "GREEN", value: "green"},
         {id: "YELLOW", value: "yellow"},
-        {id: "PURPLE", value: "purple"}
+        {id: "PURPLE", value: "purple"},
+		{id: "BLUE", value: "blue"},
+		{id: "ORANGE", value: "orange"},
+		{id: "BLACK", value: "black"},
+		{id: "WHITE", value: "white"}
     ];
 
     $scope.guess = {guess: ['','','','']};
