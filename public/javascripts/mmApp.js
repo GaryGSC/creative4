@@ -7,6 +7,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
     $scope.disableNewGameBtn = false;
     $scope.disableJoinGameBtn = false;
     $scope.disableGuessSubmitBtn = true;
+	$scope.showCreateOrJoinGame = true;
     $scope.showColorCodeBox = false;
     $scope.userName ="";
     $scope.roomId="";
@@ -94,6 +95,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
             $scope.message="Game successfully created. Your join code is: " + room_id;
             $scope.disableNewGameBtn = true;
             $scope.disableJoinGameBtn = true;
+			$scope.showCreateOrJoinGame = false;
         });
 	});
 
@@ -103,6 +105,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
             $scope.message="Game successfully joined.";
             $scope.disableNewGameBtn = true;
             $scope.disableJoinGameBtn = true;
+			$scope.showCreateOrJoinGame = false;
         });
 	});
 
@@ -132,7 +135,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 	socket.on("code_set", function(){
         console.log("Successfully set the color code. Now it's time for the other player to guess it.");
         $scope.$apply (function() {
-            $scope.message="Successfully set the color code. Now it's time for player 2 to guess it.";
+            $scope.message="Successfully set the color code. Now it's time for the other player to guess it.";
             $scope.showColorCodeBox = false;
         });
     });
@@ -149,7 +152,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
         console.log("Board now looks like this:", JSON.stringify(board_state));
         $scope.$apply(function(board_state) {
             //UPDATE APPEARANCE OF BOARD BASED ON board_state
-            $scope.sampleResponse=JSON.stringify(board_state);
+            $scope.sampleResponse = board_state;
         });
     });
 
@@ -157,6 +160,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
         console.log("The code was guessed!");
         $scope.$apply(function() {
             $scope.message="The code was guessed!";
+			$scope.disableGuessSubmitBtn = true;
             //GAME OVER? ENABLE/DISABLE STUFF?
         });
     });
@@ -165,6 +169,7 @@ angular.module('mmApp', []).controller('mmCtrl', function($scope) {
 		console.log("The code was not guessed!");
         $scope.$apply(function() {
             $scope.message="The code was not guessed!";
+			$scope.disableGuessSubmitBtn = true;
   		    //GAME OVER!
         });
 	});
